@@ -16,7 +16,9 @@ function rewrite_posts_queries_to_use_ids( $input ) {
 function find_posts_from_ids($posts) {
   global $wpdb, $saved_posts_count;
   $ids = array();
-  foreach($posts as $post) { $ids[] = $post->ID; }  
+  if(is_array($posts)) {
+    foreach($posts as $post) { $ids[] = $post->ID; }  
+  }
   $saved_posts_count = $wpdb->get_var( 'SELECT FOUND_ROWS()' );
   return $wpdb->get_results("SELECT * FROM {$wpdb->posts} WHERE ID IN (" . implode(",", $ids) . ");");
 }
