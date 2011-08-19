@@ -10,7 +10,7 @@ $saved_posts_count = 0;
 $last_order_clause = null;
 function rewrite_posts_queries_to_use_ids( $input ) {
   global $wpdb, $last_order_clause;
-  preg_match("/ORDER BY .*? (ASC|DESC)/", $input, $matches);
+  preg_match("/ORDER BY (.*? (ASC|DESC))(,.*? (ASC|DESC),?)*/i", $input, $matches);
   $last_order_clause = $matches[0];
   $newquery = str_replace("{$wpdb->posts}.* FROM {$wpdb->posts}", "{$wpdb->posts}.ID FROM {$wpdb->posts}", $input);
   return $newquery;
